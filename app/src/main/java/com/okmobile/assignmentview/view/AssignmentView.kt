@@ -2,20 +2,21 @@ package com.okmobile.assignmentview.view
 
 import android.content.Context
 import android.graphics.Canvas
-import android.widget.ListView
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
+import android.widget.*
+import androidx.appcompat.widget.AppCompatImageView
 import com.okmobile.assignmentview.R
 
 
 class AssignmentView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
-) : ListView(context, attrs) {
+) : ListView(context, attrs), AbsListView.OnScrollListener {
 
     private lateinit var mContext : Context
+    private lateinit var assignmentAdapter : AssignmentGenericAdapter<String>
 
     private val TAG = AssignmentView::class.java.simpleName
 
@@ -30,7 +31,7 @@ class AssignmentView @JvmOverloads constructor(
 
     public class AssignmentGenericAdapter<T>(
         private val context: Context,
-        private val dataSource : ArrayList<T>
+        private val dataSource : ArrayList<String>
     ) : BaseAdapter() {
 
         private val inflater: LayoutInflater
@@ -40,7 +41,7 @@ class AssignmentView @JvmOverloads constructor(
             return dataSource.size
         }
 
-        override fun getItem(position: Int): T {
+        override fun getItem(position: Int): String {
             return dataSource[position]
         }
 
@@ -53,8 +54,22 @@ class AssignmentView @JvmOverloads constructor(
                 R.layout.layout_assignment_list_item,
                 parent,
                 false)
+            val assignmentImage = rowItem.findViewById<AppCompatImageView>(R.id.assignmentImage)
             return rowItem
         }
+
+    }
+
+    override fun onScrollStateChanged(view: AbsListView?, scrollState: Int) {
+
+    }
+
+    override fun onScroll(
+        view: AbsListView?,
+        firstVisibleItem: Int,
+        visibleItemCount: Int,
+        totalItemCount: Int
+    ) {
 
     }
 
