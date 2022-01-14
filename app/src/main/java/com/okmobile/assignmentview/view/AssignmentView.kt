@@ -127,6 +127,7 @@ class AssignmentView @JvmOverloads constructor(
                 .load(dataSource[position])
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .centerCrop()
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(p0: GlideException?, p1: Any?, p2: Target<Drawable>?, p3: Boolean): Boolean {
                         return false
