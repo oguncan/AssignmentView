@@ -1,36 +1,23 @@
 package com.okmobile.assignmentview.view
 
 import android.content.Context
-import android.graphics.Canvas
 import android.graphics.drawable.Drawable
-import android.hardware.SensorManager.getOrientation
-import android.text.Layout
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.okmobile.assignmentview.R
 import kotlinx.android.synthetic.main.layout_single_image_item.view.*
-import java.util.ArrayList
-import android.widget.Toast
 
-import androidx.annotation.NonNull
-import androidx.databinding.ObservableArrayMap
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 
 import com.okmobile.assignmentview.network.ServicesManager
-import com.okmobile.assignmentview.network.HttpBinService
 import com.google.gson.Gson
 import okhttp3.OkHttpClient;
 import com.google.gson.GsonBuilder
@@ -39,9 +26,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import retrofit2.*
 import android.app.Activity
-
-
-
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.GlideException
 
 
 class AssignmentView @JvmOverloads constructor(
@@ -129,6 +115,7 @@ class AssignmentView @JvmOverloads constructor(
                                     p2: Target<Drawable>?,
                                     p3: Boolean
                                 ): Boolean {
+                                    rowItem.singleAssignmentImage.visibility = View.GONE
                                     return false
                                 }
 
