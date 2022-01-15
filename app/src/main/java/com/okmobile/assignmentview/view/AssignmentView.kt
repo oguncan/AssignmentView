@@ -30,13 +30,18 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 
 import com.okmobile.assignmentview.network.ServicesManager
-import retrofit2.Call;
-import retrofit2.Callback;
 import com.okmobile.assignmentview.network.HttpBinService
 import com.google.gson.Gson
 import okhttp3.OkHttpClient;
 import com.google.gson.GsonBuilder
-import retrofit2.Response
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import retrofit2.*
+import android.app.Activity
+
+
+
 
 
 class AssignmentView @JvmOverloads constructor(
@@ -63,7 +68,7 @@ class AssignmentView @JvmOverloads constructor(
         this.adapter = AssignmentGenericAdapter(context, mImageList)
     }
 
-    public class AssignmentGenericAdapter(
+    class AssignmentGenericAdapter(
         private val context: Context,
         private val dataSource : List<String>
     ) : BaseAdapter() {
@@ -90,22 +95,6 @@ class AssignmentView @JvmOverloads constructor(
             return position.toLong()
         }
 
-        private fun testGetRequest() {
-            startTime = System.currentTimeMillis()
-            val httpBinService: HttpBinService? = ServicesManager.getHttpBinService(mOkhttpClient!!)
-            httpBinService!!.get()!!.enqueue(object : Callback<Map<String?, Any?>?> {
-                override fun onResponse(
-                    call: Call<Map<String?, Any?>?>,
-                    response: Response<Map<String?, Any?>?>
-                ) {
-                }
-
-                override fun onFailure(call: Call<Map<String?, Any?>?>, t: Throwable) {
-                    printError(t)
-                }
-            })
-        }
-
         private fun printError(throwable: Throwable) {
             Log.d(TAG, throwable.toString())
         }
@@ -122,24 +111,43 @@ class AssignmentView @JvmOverloads constructor(
 
             mGson = GsonBuilder().setPrettyPrinting().create()
             mOkhttpClient = OkHttpClient()
-            testGetRequest()
-            Glide.with(context)
-                .load(dataSource[position])
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(p0: GlideException?, p1: Any?, p2: Target<Drawable>?, p3: Boolean): Boolean {
-                        return false
-                    }
-                    override fun onResourceReady(p0: Drawable?, p1: Any?, p2: Target<Drawable>?, p3: DataSource?, p4: Boolean): Boolean {
-                        elapsedTime = System.currentTimeMillis() - startTime
-                        printImageLoadingTime(position, elapsedTime)
-                        elapsedTime = 0L
+            GlobalScope.launch(Dispatchers.IO){
+                startTime = System.currentTimeMillis()
+                val response = ServicesManager.getHttpBinService(mOkhttpClient!!)!!
+                    .get()!!.awaitResponse()
+                if(response.isSuccessful) {
+                    (context as Activity).runOnUiThread {
+                        Glide.with(context)
+                            .load(dataSource[position])
+                            .placeholder(R.drawable.ic_launcher_foreground)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .centerCrop()
+                            .listener(object : RequestListener<Drawable> {
+                                override fun onLoadFailed(
+                                    p0: GlideException?,
+                                    p1: Any?,
+                                    p2: Target<Drawable>?,
+                                    p3: Boolean
+                                ): Boolean {
+                                    return false
+                                }
 
-                        return false
+                                override fun onResourceReady(
+                                    p0: Drawable?,
+                                    p1: Any?,
+                                    p2: Target<Drawable>?,
+                                    p3: DataSource?,
+                                    p4: Boolean
+                                ): Boolean {
+                                    elapsedTime = System.currentTimeMillis() - startTime
+                                    printImageLoadingTime(position, elapsedTime)
+                                    elapsedTime = 0L
+                                    return false
+                                }
+                            }).into(rowItem.singleAssignmentImage)
                     }
-                }).into(rowItem.singleAssignmentImage)
+                }
+            }
             return rowItem
         }
 
