@@ -1,13 +1,12 @@
-# HorizontalListView
+# AssignmentView
 
-HorizontalListView is an Android ListView widget which scrolls in a horizontal manner (in contrast with the SDK-provided ListView which scrolls vertically).
+AssignmentView is an Android ListView widget which scrolls in a horizontal manner (in contrast with the SDK-provided ListView which scrolls vertically).
 
 ## Usage
 To use in an XML layout:
  0. Include The Library into your project
- 0. Make sure you are running ADT version 17 or greater
- 0. Add this XML namespace to your layout `xmlns:widget="http://schemas.android.com/apk/res-auto"`
- 0. Create the HorizontalListView as `com.meetme.android.horizontallistview.HorizontalListView`
+ 0. Make sure you are running ADT version 21 or greater
+ 0. Create the HorizontalListView as `com.okmobile.assignmentview.view.AssignmentView`
 
 **Example**:
 
