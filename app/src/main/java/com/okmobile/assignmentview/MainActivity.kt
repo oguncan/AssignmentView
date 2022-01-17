@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.okmobile.assignmentview.adapter.AssignmentAdapter
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-//        assignmentImageView.setImageList(sampleImageList)
-//        assignmentImageView.adapter = AssignmentAdapter(this, sampleImageList)
+        assignmentImageView.setImageList(sampleImageList)
+        assignmentImageView.adapter = AssignmentAdapter(this, sampleImageList)
     }
 }
