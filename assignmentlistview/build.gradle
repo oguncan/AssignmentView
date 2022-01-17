@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'maven-publish'
 }
 
 android {
@@ -63,4 +64,17 @@ dependencies {
 
     //KotlinX
     implementation 'androidx.core:core-ktx:1.3.2'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication){
+
+                groupId = 'com.github.oguncan'
+                artifactId = 'assignmentlistview'
+                version = '1.0'
+            }
+        }
+    }
 }
