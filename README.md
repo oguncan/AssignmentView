@@ -15,7 +15,7 @@ To use in an XML layout:
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-## Known Issues
+## Known limitations
  - Only the design is extracted with the resource file we have created.
  - Even if the height value is entered for the AssignmentView, it cannot be adjusted other than the value entered in the class.
 
