@@ -35,4 +35,9 @@
 <!--        </LinearLayout>-->
 <!--    </com.okmobile.assignmentview.view.AssignmentScrollView>-->
 
+    <com.okmobile.assignmentview.view.AssignmentView
+        android:id="@+id/assignmentImageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 </RelativeLayout>
