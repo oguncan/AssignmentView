@@ -10,10 +10,17 @@ To use in an XML layout:
 
 **Example**:
 
+    -In Layout
+
     <com.okmobile.assignmentview.view.AssignmentView
-        android:id="@+id/HorizontalListView"
+        android:id="@+id/assignmentImageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+        
+    -In Activity
+    
+    assignmentImageView.setImageList(sampleImageList)
+    assignmentImageView.adapter = AssignmentAdapter(this, sampleImageList)
 
 ## Known limitations
  - Only the design is extracted with the resource file we have created.
