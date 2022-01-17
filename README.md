@@ -4,9 +4,9 @@ AssignmentView is an Android ListView widget which scrolls in a horizontal manne
 
 ## Usage
 To use in an XML layout:
- 0. Include The Library into your project
- 0. Make sure you are running ADT version 21 or greater
- 0. Create the HorizontalListView as `com.okmobile.assignmentview.view.AssignmentView`
+ - Include The Library into your project
+ - Make sure you are running ADT version 21 or greater
+ - Create the HorizontalListView as `com.okmobile.assignmentview.view.AssignmentView`
 
 **Example**:
 
