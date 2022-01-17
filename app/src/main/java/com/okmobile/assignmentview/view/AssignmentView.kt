@@ -21,9 +21,6 @@ import com.okmobile.assignmentview.network.ServicesManager
 import com.google.gson.Gson
 import okhttp3.OkHttpClient;
 import com.google.gson.GsonBuilder
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import retrofit2.*
 import android.app.Activity
 import com.bumptech.glide.Glide
@@ -44,14 +41,12 @@ import android.widget.AdapterView.OnItemLongClickListener
 
 import android.widget.Scroller
 import androidx.core.view.GestureDetectorCompat
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 import java.util.LinkedList
 
 import java.util.Queue
-
-
-
+import kotlin.system.measureTimeMillis
 
 
 class AssignmentView @JvmOverloads constructor(
@@ -441,6 +436,8 @@ class AssignmentView @JvmOverloads constructor(
             Log.d(TAG, "${position+1}. image load time = "+ time.toString())
         }
 
+        private val scope = CoroutineScope(SupervisorJob() + CoroutineName("LoginHelper"))
+
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             val rowItem = inflater.inflate(
                 R.layout.layout_single_image_item,
@@ -449,6 +446,11 @@ class AssignmentView @JvmOverloads constructor(
 
             mGson = GsonBuilder().setPrettyPrinting().create()
             mOkhttpClient = OkHttpClient()
+            startTime = System.currentTimeMillis()
+            /**
+             * Since no other method could be found, such a method was used.
+             * I'm waiting for your feedback if I make a mistake.
+             */
             (context as Activity).runOnUiThread {
                 Glide.with(context)
                     .load(dataSource[position])
@@ -473,21 +475,25 @@ class AssignmentView @JvmOverloads constructor(
                             p3: DataSource?,
                             p4: Boolean
                         ): Boolean {
-                            elapsedTime = System.currentTimeMillis() - startTime
-                            printImageLoadingTime(position, elapsedTime)
-                            elapsedTime = 0L
+                            GlobalScope.launch(Dispatchers.IO) {
+                                val time = measureTimeMillis {
+                                    val success = responseSession()
+                                    elapsedTime = System.currentTimeMillis() - startTime
+                                    printImageLoadingTime(position, elapsedTime)
+                                    elapsedTime = 0L
+                                }
+                            }
                             return false
                         }
                     }).into(rowItem.singleAssignmentImage)
             }
-            GlobalScope.launch(Dispatchers.IO){
-                startTime = System.currentTimeMillis()
-                val response = ServicesManager.getHttpBinService(mOkhttpClient!!)!!
-                    .get()!!.awaitResponse()
-                if(response.isSuccessful) {
-                }
-            }
             return rowItem
+        }
+
+        private suspend fun responseSession() : Boolean {
+            val response = ServicesManager.getHttpBinService(mOkhttpClient!!)!!
+                .get()!!.awaitResponse()
+            return response.isSuccessful
         }
 
     }
