@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.okmobile.assignmentview.R
 import kotlinx.android.synthetic.main.layout_single_image_item.view.*
 
 import com.bumptech.glide.load.DataSource
@@ -155,18 +154,13 @@ class AssignmentView @JvmOverloads constructor(
     }
 
     private fun addAndMeasureChild(child: View, viewPos: Int) {
-        var params = child.layoutParams
+        var params: ViewGroup.LayoutParams? = child.layoutParams
         if (params == null) {
-            params = LayoutParams(
-                LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT
-            )
+            params = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         }
+
         addViewInLayout(child, viewPos, params, true)
-        child.measure(
-            MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST),
-            MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST)
-        )
+        child.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.AT_MOST), View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.AT_MOST))
     }
 
     @Synchronized
@@ -399,102 +393,5 @@ class AssignmentView @JvmOverloads constructor(
 
     fun setImageList(images : List<String>){
         mImageList = images
-    }
-
-    class AssignmentGenericAdapter(
-        private val context: Context,
-        private val dataSource : List<String>
-    ) : BaseAdapter() {
-
-        private val TAG = AssignmentGenericAdapter::class.java.simpleName
-        private var mOkhttpClient: OkHttpClient? = null
-        private var mGson: Gson? = null
-
-        private val inflater: LayoutInflater
-                = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
-        var startTime = System.currentTimeMillis()
-        var elapsedTime = 0L
-
-        override fun getCount(): Int {
-            return dataSource.size
-        }
-
-        override fun getItem(position: Int): String {
-            return dataSource[position]
-        }
-
-        override fun getItemId(position: Int): Long {
-            return position.toLong()
-        }
-
-        private fun printError(throwable: Throwable) {
-            Log.d(TAG, throwable.toString())
-        }
-
-        private fun printImageLoadingTime(position: Int, time : Any){
-            Log.d(TAG, "${position+1}. image load time = "+ time.toString())
-        }
-
-        private val scope = CoroutineScope(SupervisorJob() + CoroutineName("LoginHelper"))
-
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            val rowItem = inflater.inflate(
-                R.layout.layout_single_image_item,
-                parent,
-                false)
-
-            mGson = GsonBuilder().setPrettyPrinting().create()
-            mOkhttpClient = OkHttpClient()
-            startTime = System.currentTimeMillis()
-            /**
-             * Since no other method could be found, such a method was used.
-             * I'm waiting for your feedback if I make a mistake.
-             */
-            (context as Activity).runOnUiThread {
-                Glide.with(context)
-                    .load(dataSource[position])
-                    .placeholder(R.drawable.ic_launcher_foreground)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .centerCrop()
-                    .listener(object : RequestListener<Drawable> {
-                        override fun onLoadFailed(
-                            p0: GlideException?,
-                            p1: Any?,
-                            p2: Target<Drawable>?,
-                            p3: Boolean
-                        ): Boolean {
-                            rowItem.singleAssignmentImage.visibility = View.GONE
-                            return false
-                        }
-
-                        override fun onResourceReady(
-                            p0: Drawable?,
-                            p1: Any?,
-                            p2: Target<Drawable>?,
-                            p3: DataSource?,
-                            p4: Boolean
-                        ): Boolean {
-                            GlobalScope.launch(Dispatchers.IO) {
-                                val time = measureTimeMillis {
-                                    val success = responseSession()
-                                    elapsedTime = System.currentTimeMillis() - startTime
-                                    printImageLoadingTime(position, elapsedTime)
-                                    elapsedTime = 0L
-                                }
-                            }
-                            return false
-                        }
-                    }).into(rowItem.singleAssignmentImage)
-            }
-            return rowItem
-        }
-
-        private suspend fun responseSession() : Boolean {
-            val response = ServicesManager.getHttpBinService(mOkhttpClient!!)!!
-                .get()!!.awaitResponse()
-            return response.isSuccessful
-        }
-
     }
 }

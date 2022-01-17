@@ -7,6 +7,8 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/layout_assignment_list_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/layout_single_image_item.xml" value="0.2984375" />
+        <entry key="assignmentlistview/src/main/res/drawable/ic_launcher_background.xml" value="0.3151041666666667" />
+        <entry key="assignmentlistview/src/main/res/layout/layout_single_image_item.xml" value="0.2989583333333333" />
       </map>
     </option>
   </component>
