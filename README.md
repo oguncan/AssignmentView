@@ -25,7 +25,7 @@ To use in an XML layout:
 
 ## Licenses
 
-This library licensed under the MIT license. This library makes use of code originally developed and licensed by [Ogün Can KAYA](oguncanlnx@gmail.com).
+This library licensed under the MIT license. This library makes use of code originally developed and licensed by [Ogün Can KAYA](https://github.com/oguncan).
 
     The MIT License Copyright (c) 2022 Ogün Can KAYA (oguncanlnx@gmail.com)
     
