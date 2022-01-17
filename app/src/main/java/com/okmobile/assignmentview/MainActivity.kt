@@ -55,5 +55,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         assignmentImageView.setImageList(sampleImageList)
+        assignmentImageView.adapter = AssignmentGenericAdapter(this, sampleImageList)
     }
 }
