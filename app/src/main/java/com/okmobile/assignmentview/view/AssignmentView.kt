@@ -438,7 +438,7 @@ class AssignmentView @JvmOverloads constructor(
         }
 
         private fun printImageLoadingTime(position: Int, time : Any){
-            Log.d(TAG, "${position}. image load time = "+ time.toString())
+            Log.d(TAG, "${position+1}. image load time = "+ time.toString())
         }
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
