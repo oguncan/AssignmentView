@@ -23,7 +23,7 @@ To use in an XML layout:
 
  - [Ogün Can KAYA](https://github.com/oguncan)
 
-#![Screenshot](https://github.com/oguncan/AssignmentView/blob/master/Screen%20Shot%202022-01-17%20at%2022.29.34.png)
+<img src="https://github.com/oguncan/AssignmentView/blob/master/Screen%20Shot%202022-01-17%20at%2022.29.34.png" data-canonical-src="https://github.com/oguncan/AssignmentView/blob/master/Screen%20Shot%202022-01-17%20at%2022.29.34.png" width="200" height="400" />
 
 ## Licenses
 
