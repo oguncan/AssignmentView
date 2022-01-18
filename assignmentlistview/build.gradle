@@ -37,6 +37,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = '11'
+        useIR = true
     }
 }
 
@@ -76,6 +77,8 @@ afterEvaluate {
     publishing {
         publications {
             release(MavenPublication){
+
+                from components.release
 
                 groupId = 'com.github.oguncan'
                 artifactId = 'AssignmentView'
