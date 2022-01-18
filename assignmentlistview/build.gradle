@@ -82,7 +82,7 @@ afterEvaluate {
 
                 groupId = 'com.github.oguncan'
                 artifactId = 'AssignmentView'
-                version = '1.6'
+                version = '1.7'
             }
         }
     }
