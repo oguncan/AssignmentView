@@ -4,12 +4,13 @@ import android.content.Context
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.okmobile.assignmentview.adapter.AssignmentAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private var sampleImageList = listOf(
-        "https://db62cod6cnasq.cloudfront.net/user-media/0/image1-500kb.png",
+    private var sampleImageList = arrayListOf<String>(
+        "https://db62cod6cnasq.cloudfront.net/user-media/0/image1-50",
         "https://db62cod6cnasq.cloudfront.net/user-media/0/image2-500kb.png",
         "https://db62cod6cnasq.cloudfront.net/user-media/0/image3-500kb.png",
         "https://db62cod6cnasq.cloudfront.net/user-media/0/image4-500kb.png",
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-//        assignmentImageView.setImageList(sampleImageList)
-//        assignmentImageView.adapter = AssignmentAdapter(this, sampleImageList)
+        assignmentImageView.setImageList(sampleImageList)
+        assignmentImageView.adapter = AssignmentAdapter(this, sampleImageList)
     }
 }

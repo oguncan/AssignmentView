@@ -26,7 +26,7 @@ import kotlin.system.measureTimeMillis
 
 class AssignmentAdapter(
     private val context: Context,
-    private val dataSource : List<String>
+    private val dataSource : ArrayList<String>
 ) : BaseAdapter() {
 
     private val TAG = AssignmentAdapter::class.java.simpleName
@@ -88,6 +88,11 @@ class AssignmentAdapter(
                         p3: Boolean
                     ): Boolean {
                         rowItem.singleAssignmentImage.visibility = View.GONE
+                        rowItem.visibility = View.GONE
+                        rowItem.layoutParams.height = 0
+                        rowItem.layoutParams.width = 0
+                        dataSource.removeAt(position)
+                        notifyDataSetChanged()
                         return false
                     }
 
