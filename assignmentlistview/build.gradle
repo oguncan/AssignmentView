@@ -6,6 +6,8 @@ plugins {
     id 'maven-publish'
 }
 
+group = 'com.github.oguncan'
+
 android {
     compileSdk 31
 
@@ -76,8 +78,8 @@ afterEvaluate {
             release(MavenPublication){
 
                 groupId = 'com.github.oguncan'
-                artifactId = 'assignmentlistview'
-                version = '1.0'
+                artifactId = 'AssignmentView'
+                version = '1.4'
             }
         }
     }

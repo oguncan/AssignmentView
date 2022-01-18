@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        assignmentImageView.setImageList(sampleImageList)
-        assignmentImageView.adapter = AssignmentAdapter(this, sampleImageList)
+//        assignmentImageView.setImageList(sampleImageList)
+//        assignmentImageView.adapter = AssignmentAdapter(this, sampleImageList)
     }
 }
