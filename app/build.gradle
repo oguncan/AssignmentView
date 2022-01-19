@@ -47,10 +47,10 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-    //implementation 'com.github.oguncan:AssignmentView:1.9'
+    implementation 'com.github.oguncan:AssignmentView:1.10'
 
 
 
-    implementation project(':assignmentlistview')
+//    implementation project(':assignmentlistview')
 
 }

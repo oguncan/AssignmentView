@@ -24,7 +24,7 @@ repositories {
 
 ```
 dependencies {
-  implementation 'com.github.oguncan:AssignmentView:1.8'
+  implementation 'com.github.oguncan:AssignmentView:1.10'
 }
 ```
 - settings.gradle file
