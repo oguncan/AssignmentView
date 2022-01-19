@@ -56,7 +56,7 @@ class AssignmentAdapter(
     }
 
     private fun printImageLoadingTime(position: Int, time : Any){
-        Log.d(TAG, "${position+1}. image load time = "+ time.toString())
+        Log.d(TAG, "${position+1}. image load time = "+ time.toString() + "ms")
     }
 
     private val scope = CoroutineScope(SupervisorJob() + CoroutineName("LoginHelper"))
